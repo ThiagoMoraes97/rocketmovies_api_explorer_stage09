@@ -1,0 +1,15 @@
+{
+  "name": "rocketnotes_api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/server.js"
+  },
+  "keywords": [],
+  "author": "Thiago Moraes",
+  "license": "ISC",
+  "description": "API da aplicação RocketNotes desenvolvida no Stage 08 do curso Explorer da Rocketseat.",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

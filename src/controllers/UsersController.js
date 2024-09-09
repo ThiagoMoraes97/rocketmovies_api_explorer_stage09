@@ -1,7 +1,6 @@
 const AppError = require("../utils/AppError");
 const { hash, compare } = require("bcryptjs");
 const knex = require("../database/knex");
-const e = require("express");
 
 class UsersController {
   async create(request, response) {
@@ -21,14 +20,14 @@ class UsersController {
       password: hashedPassword
     });
 
-    response.status(201).json();
+    return response.status(201).json();
   };
 
   async update(request, response) {
     const {name, email, password, old_password} = request.body;
-    const { id } = request.params;
+    const user_id = request.user.id;
   
-    const user = await knex("users").where({id}).first();
+    const user = await knex("users").where({id: user_id}).first();
 
     if (email){
       const checkEmailExist = await knex("users").where({email}).first();
@@ -58,7 +57,7 @@ class UsersController {
     user.email = email ?? user.email
    
 
-    await knex("users").where({id}).update({
+    await knex("users").where({id: user_id}).update({
       name: user.name,
       email: user.email,
       password: user.password
@@ -71,9 +70,9 @@ class UsersController {
 
   async delete(request, response) {
 
-    const { id } = request.params;
+    const user_id = request.user.id;
 
-    await knex("users").where({id}).delete();
+    await knex("users").where({id: user_id}).delete();
 
     response.status(204).json();
 

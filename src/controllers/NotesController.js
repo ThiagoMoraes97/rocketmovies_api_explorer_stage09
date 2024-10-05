@@ -36,6 +36,8 @@ class NotesController {
     const { title, tags } = request.query;
     const user_id = request.user.id;
 
+    console.log(user_id)
+
     let notes 
 
     if (tags){
@@ -68,7 +70,8 @@ class NotesController {
       }
      
     });
-
+    
+    console.log(notes)
     return response.json(notesWithTags);
   };
 

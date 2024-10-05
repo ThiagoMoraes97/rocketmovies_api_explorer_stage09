@@ -1,4 +1,4 @@
-const { Router, json } = require("express");
+const { Router} = require("express");
 const multer = require("multer");
 const uploadConfig = require("../configs/upload");
 
@@ -15,7 +15,7 @@ const userAvatarController = new UserAvatarController();
 
 userRoutes.post("/", usersController.create);
 userRoutes.put("/", ensureAuthenticated ,usersController.update);
-userRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), userAvatarController.update);
 userRoutes.delete("/", ensureAuthenticated ,usersController.delete);
+userRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), userAvatarController.update);
 
 module.exports = userRoutes;

@@ -1,24 +1,16 @@
 const AppError = require("../utils/AppError");
 const { hash, compare } = require("bcryptjs");
 const knex = require("../database/knex");
-
+const UserRepositories = require("../repositories/UserRepository");
+const UserCreateService = require("../services/UserCreateService");
 class UsersController {
   async create(request, response) {
-    const { name, email, password} = request.body;
+    const { name, email, password} = request.body; 
 
-    const checkIfEmailExist = await knex("users").where({email}).first();
+    const userRepositories = new UserRepositories(); 
+    const userCreateService = new UserCreateService(userRepositories);
 
-    if(checkIfEmailExist){
-      throw new AppError("E-mail já cadastrado!")
-    };
-
-    const hashedPassword = await hash(password, 8);
-
-    await knex("users").insert({
-      name,
-      email,
-      password: hashedPassword
-    });
+    userCreateService.execute({name, email, password});
 
     return response.status(201).json();
   };
